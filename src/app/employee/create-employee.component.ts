@@ -58,6 +58,23 @@ export class CreateEmployeeComponent implements OnInit {
 		// ------------ Using FormBuilder Service ------------ //
 	}
 
+	logKeyValuePairs(group: FormGroup): void {
+		Object.keys(group.controls).forEach((key: string) => {
+			const abstructControl = group.get(key);
+			if(abstructControl instanceof FormGroup) {
+				abstructControl.disable();
+				this.logKeyValuePairs(abstructControl);
+			}
+			else {
+				console.log('Key = '+ key +' Value = '+ abstructControl.value)
+			}
+		})
+	}
+
+	onLogKeyValuePairsClick(): void {
+		this.logKeyValuePairs(this.employeeForm)
+	}
+
 	onSetValueClick(): void
 	{
 		this.employeeForm.setValue({
