@@ -12,10 +12,63 @@ export class CreateEmployeeComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
+		// ------------- Basics Completed -------------  //
+		// this.employeeForm = new FormGroup({
+		// 	fullName: new FormControl(),
+		// 	email: new FormControl()
+		// });
+		// ------------- Basics Completed -------------  //
+
+		// ------------- NestedForm Group ------------- //
 		this.employeeForm = new FormGroup({
 			fullName: new FormControl(),
-			email: new FormControl()
-		});
+			email: new FormControl(),
+			skills: new FormGroup({
+				skillName: new FormControl(),
+				experienceInYears: new FormControl(),
+				proficiency: new FormControl()
+			})
+		})
+		// ------------- NestedForm Group ------------- //
+	}
+
+	onSetValueClick(): void
+	{
+		this.employeeForm.setValue({
+			fullName: "NoorJahan",
+			email: "test@email.com",
+			skills: {
+				skillName: "Angular",
+				experienceInYears: 1,
+				proficiency: "beginner"
+			}
+		})
+	}
+
+	onPatchValueClick(): void
+	{
+		this.employeeForm.patchValue({
+			fullName: "Patch Some NoorJahan",
+			email: "patchtest@email.com",
+			// skills: {
+			// 	skillName: "Angular",
+			// 	experienceInYears: 1,
+			// 	proficiency: "beginner"
+			// }
+		})
+	}
+
+	onPatchAllValueClick(): void
+	{
+		this.employeeForm.patchValue({
+			fullName: "NoorJahan",
+			email: "test@email.com",
+			skills: {
+				skillName: "Angular",
+				experienceInYears: 1,
+				proficiency: "beginner"
+			}
+		})
 	}
 
 	onSubmit(): void 

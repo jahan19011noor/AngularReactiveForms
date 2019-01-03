@@ -8,20 +8,51 @@
 	</div>
 	<div class="panel-body">
 		<div class="form-group">
-			<label for="fullName" class="col-sm-2 control-label"></label>
+			<label for="fullName" class="col-sm-2 control-label">Name</label>
 			<div class="col-sm-8">
 				<input type="text" id="fullName" class="form-control" formControlName="fullName">
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="email" class="col-sm-2 control-label"></label>
+			<label for="email" class="col-sm-2 control-label">Email</label>
 			<div class="col-sm-8">
 				<input type="text" id="email" class="form-control" formControlName="email">
 			</div>
 		</div>
+		<div formGroupName="skills">
+			<div class="form-group">
+				<label for="skillName" class="col-sm-2 control-label">Skill</label>
+			
+				<div class="col-sm-4">
+					<input type="text" class="form-control" id="skillName" placeholder="Skill Name" formControlName="skillName">	
+				</div>
+				<div class="col-sm-4">
+					<input type="text" class="form-control" placeholder="Experience in Years" formControlName="experienceInYears">	
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Proficiency</label>
+				<div class="col-sm-8">
+					<label class="radio-inline">
+						<input type="radio" value="beginner" formControlName="proficiency" id="proficiency"> Beginner
+					</label>
+					<label class="radio-inline">
+						<input type="radio" value="intermediate" formControlName="proficiency" id="proficiency"> Intermediate
+					</label>
+					<label class="radio-inline">
+						<input type="radio" value="advanced" formControlName="proficiency" id="proficiency"> Advanced
+					</label>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="panel-footer">
-		<button class="btn btn-primary" type="submit">Save</button>
+		<div class="btn-toolbar">
+			<button class="btn btn-primary" type="submit">Save</button>
+			<button class="btn btn-primary" type="button" (click)="onSetValueClick()">Set Value</button>
+			<button class="btn btn-primary" type="button" (click)="onPatchValueClick()">Patch Some Values</button>
+			<button class="btn btn-primary" type="button" (click)="onPatchAllValueClick()">Patch All Values</button>
+		</div>
 	</div>
 </form>
 
