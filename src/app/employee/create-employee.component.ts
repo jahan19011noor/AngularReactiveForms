@@ -24,6 +24,13 @@ export class CreateEmployeeComponent implements OnInit {
 			'email': 'Email is invalid.',
 			'emailDomain': 'Email domain should be dell.com'
 		},
+		'confirmEmail': {
+			'required': 'Confirm Email is required.',
+			'email': 'Email is invalid.',
+		},
+		'emailGroup': {
+			'emailMissmatch': 'Email and Confirm Email do not match.'
+		},
 		'phone': {
 			'required': 'Phone is required.'
 		},
@@ -43,6 +50,8 @@ export class CreateEmployeeComponent implements OnInit {
 	formErrors = {
 		'fullName': '',
 		'email': '',
+		'confirmEmail': '',
+		'emailGroup': '',
 		'phone': '',
 		'skillName': '',
 		'experienceInYears': '',
@@ -76,7 +85,10 @@ export class CreateEmployeeComponent implements OnInit {
 		this.employeeForm = this.fb.group({
 			fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
 			contactPreference: ['email'],
-			email: ['', [Validators.required, Validators.email, CustomeValidators.emailDomain('dell.com')]],
+			emailGroup: this.fb.group({
+				email: ['', [Validators.required, Validators.email, CustomeValidators.emailDomain('dell.com')]],
+				confirmEmail: ['', [Validators.required, Validators.email]]
+			}, {validator: CustomeValidators.matchEmails}),
 			phone: [''],
 			skills: this.fb.group({
 				skillName: ['', Validators.required],
@@ -126,25 +138,25 @@ export class CreateEmployeeComponent implements OnInit {
 	showValidationErrors(group: FormGroup = this.employeeForm): void {
 		Object.keys(group.controls).forEach((key: string) => {
 			const abstructControl = group.get(key);
+
+			this.formErrors[key] = '';
+			if(abstructControl && !abstructControl.valid && 
+				(abstructControl.touched || abstructControl.dirty)) {
+				const messages = this.validationMessages[key]
+
+				for (const errorKey in abstructControl.errors)
+				{
+					if (errorKey)
+					{
+						this.formErrors[key] += messages[errorKey] + ' ';
+					}
+				}
+				// console.log(messages)
+				// console.log(abstructControl.errors)
+			}
+
 			if (abstructControl instanceof FormGroup) {
 				this.showValidationErrors(abstructControl);
-			}
-			else {
-				this.formErrors[key] = '';
-				if(abstructControl && !abstructControl.valid && 
-					(abstructControl.touched || abstructControl.dirty)) {
-					const messages = this.validationMessages[key]
-
-					for (const errorKey in abstructControl.errors)
-					{
-						if (errorKey)
-						{
-							this.formErrors[key] += messages[errorKey] + ' ';
-						}
-					}
-					// console.log(messages)
-					// console.log(abstructControl.errors)
-				}
 			}
 		})
 	}
