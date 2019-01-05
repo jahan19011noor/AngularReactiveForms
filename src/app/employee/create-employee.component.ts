@@ -22,7 +22,7 @@ export class CreateEmployeeComponent implements OnInit {
 		'email': {
 			'required': 'Email is required.',
 			'email': 'Email is invalid.',
-			'emailDomain': 'Email domain should be pragimtech.com'
+			'emailDomain': 'Email domain should be dell.com'
 		},
 		'phone': {
 			'required': 'Phone is required.'
@@ -76,7 +76,7 @@ export class CreateEmployeeComponent implements OnInit {
 		this.employeeForm = this.fb.group({
 			fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
 			contactPreference: ['email'],
-			email: ['', [Validators.required, Validators.email, CustomeValidators.emailDomain]],
+			email: ['', [Validators.required, Validators.email, CustomeValidators.emailDomain('dell.com')]],
 			phone: [''],
 			skills: this.fb.group({
 				skillName: ['', Validators.required],
