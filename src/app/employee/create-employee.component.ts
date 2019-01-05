@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { CustomeValidators } from './custome-validators';
+
 
 @Component({
   selector: 'app-create-employee',
@@ -18,7 +20,9 @@ export class CreateEmployeeComponent implements OnInit {
 			'maxlength': 'Full Name must be smaller than 10 characters.'
 		},
 		'email': {
-			'required': 'Email is required.'
+			'required': 'Email is required.',
+			'email': 'Email is invalid.',
+			'emailDomain': 'Email domain should be pragimtech.com'
 		},
 		'phone': {
 			'required': 'Phone is required.'
@@ -72,7 +76,7 @@ export class CreateEmployeeComponent implements OnInit {
 		this.employeeForm = this.fb.group({
 			fullName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(10)]],
 			contactPreference: ['email'],
-			email: ['', Validators.required],
+			email: ['', [Validators.required, Validators.email, CustomeValidators.emailDomain]],
 			phone: [''],
 			skills: this.fb.group({
 				skillName: ['', Validators.required],
