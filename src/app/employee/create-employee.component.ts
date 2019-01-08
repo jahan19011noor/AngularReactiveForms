@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { CustomeValidators } from './custome-validators';
 
 
@@ -185,15 +185,67 @@ export class CreateEmployeeComponent implements OnInit {
 
 	onSetValueClick(): void
 	{
-		this.employeeForm.setValue({
-			fullName: "NoorJahan",
-			email: "test@email.com",
-			skills: {
-				skillName: "Angular",
-				experienceInYears: 1,
-				proficiency: "beginner"
+		// this.employeeForm.setValue({
+		// 	fullName: "NoorJahan",
+		// 	email: "test@email.com",
+		// 	skills: {
+		// 		skillName: "Angular",
+		// 		experienceInYears: 1,
+		// 		proficiency: "beginner"
+		// 	}
+		// })
+
+		// ------------ creating form array using FormArray class constructor
+		// const formArray = new FormArray([
+		// 	new FormControl('Noor', Validators.required),
+		// 	new FormGroup({
+		// 		country: new FormControl('', Validators.required)
+		// 	}),
+		// 	new FormArray([])
+		// ])
+		// ------------ creating form array using FormArray class constructor
+
+		// ------------ creating forms array using the array method of FormBuilder class
+			// *** Note: FormArray are usually used to store like items although they can store unlike items
+		const formArray = this.fb.array([
+			new FormControl('Noor', Validators.required),
+			new FormControl('IT', Validators.required),
+			new FormControl('Female', Validators.required)
+
+		])
+
+		formArray.push(new FormControl('Mark', Validators.required))
+
+		console.log(formArray.at(3).value)
+
+		const formGroup = this.fb.group([
+			new FormControl('Noor', Validators.required),
+			new FormControl('IT', Validators.required),
+			new FormControl('Female', Validators.required)
+
+		])
+
+		// ------------ creating forms array using the array method of FormBuilder class
+
+			// ** Note: FormArray are used to dynamically generate fields on live form
+
+		console.log(formArray)
+		console.log(formGroup)
+
+		for(const control of formArray.controls){
+			if(control instanceof FormControl)
+			{
+				console.log("Control is FormControl")
 			}
-		})
+			if(control instanceof FormGroup)
+			{
+				console.log("Control is FormGroup")
+			}
+			if(control instanceof FormArray)
+			{
+				console.log("Control is FormArray")
+			}
+		}
 	}
 
 	onPatchValueClick(): void
